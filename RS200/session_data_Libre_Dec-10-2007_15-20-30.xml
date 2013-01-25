@@ -1,0 +1,113 @@
+<rs200_session id="Libre10122007152030">
+    <user>
+        <weight>93</weight>
+        <height>190</height>
+        <birth_date>06.06.1971</birth_date>
+        <max_hr>184</max_hr>
+        <vo_max>39</vo_max>
+        <sitting_hr>70</sitting_hr>
+        <gender>Male</gender>
+        <activity_level>Moderate</activity_level>
+    </user>
+    <session_data>
+        <name>Libre</name>
+        <day>10</day>
+        <month>12</month>
+        <year>2007</year>
+        <start_hour>15</start_hour>
+        <start_minute>20</start_minute>
+        <start_second>30</start_second>
+        <has_pace_data>TRUE</has_pace_data>
+        <summary>
+            <number_of_laps>2</number_of_laps>
+            <total_distance>11290</total_distance>
+            <max_pace>260.8</max_pace>
+            <avg_pace>315.7</avg_pace>
+            <best_lap>1</best_lap>
+            <best_laptime>3169.1</best_laptime>
+            <length>3564.7</length>
+            <avg_hr>168</avg_hr>
+            <max_hr>180</max_hr>
+            <max_set_hr>184</max_set_hr>
+            <calories>944</calories>
+        </summary>
+        <limiterzones>
+            <limiter_type>0</limiter_type>
+            <limiterzone zoneno="1">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+            <limiterzone zoneno="2">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+            <limiterzone zoneno="3">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+            <limiterzone zoneno="4">
+                <limit_zone>0</limit_zone>
+                <time_below>0.0</time_below>
+                <time_on>0.0</time_on>
+                <time_above>0.0</time_above>
+            </limiterzone>
+        </limiterzones>
+        <sportzones>
+            <sportzone zoneno="1">
+                <low_percent>50</low_percent>
+                <high_percent>59</high_percent>
+                <time_on>8.0</time_on>
+            </sportzone>
+            <sportzone zoneno="2">
+                <low_percent>60</low_percent>
+                <high_percent>69</high_percent>
+                <time_on>24.0</time_on>
+            </sportzone>
+            <sportzone zoneno="3">
+                <low_percent>70</low_percent>
+                <high_percent>79</high_percent>
+                <time_on>127.0</time_on>
+            </sportzone>
+            <sportzone zoneno="4">
+                <low_percent>80</low_percent>
+                <high_percent>89</high_percent>
+                <time_on>602.0</time_on>
+            </sportzone>
+            <sportzone zoneno="5">
+                <low_percent>90</low_percent>
+                <high_percent>99</high_percent>
+                <time_on>2792.0</time_on>
+            </sportzone>
+        </sportzones>
+        <laps>
+            <lap lap_no="2">
+                <lap_end_time>3564.7</lap_end_time>
+                <laptime>395.6</laptime>
+                <autolap>0</autolap>
+                <end_hr>166</end_hr>
+                <avg_hr>175</avg_hr>
+                <max_hr>179</max_hr>
+                <end_pace>300.0</end_pace>
+                <avg_pace>306.2</avg_pace>
+                <lap_length>1290</lap_length>
+            </lap>
+            <lap lap_no="1">
+                <lap_end_time>3169.1</lap_end_time>
+                <laptime>3169.1</laptime>
+                <autolap>1</autolap>
+                <end_hr>172</end_hr>
+                <avg_hr>167</avg_hr>
+                <max_hr>180</max_hr>
+                <end_pace>295.2</end_pace>
+                <avg_pace>316.9</avg_pace>
+                <lap_length>10000</lap_length>
+            </lap>
+        </laps>
+    </session_data>
+</rs200_session>

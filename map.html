@@ -1,0 +1,157 @@
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+
+	<title>GoogleMap</title>
+	
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=xxx-xxx-xxx_xxx_xxx_xxx" type="text/javascript"></script>
+	
+	<style type="text/css">
+		html, body {width: 100%; height: 100%} 
+		body {margin-top: 0px; margin-right: 0px; margin-left: 0px; margin-bottom: 0px}
+	</style>
+	
+	<script type='text/javascript'>
+		//<![CDATA[
+		var m_oMap = null;
+		var m_oPolyline = null;
+		var m_oMarker = null;
+		var m_oGeocoder = null;
+		var m_oDirections = null;
+		var m_oLastLati = 0;
+		var m_oLastLongi = 0;
+		
+		function unload()
+		{
+			try {
+				GUnload();
+			}
+			catch(err) {
+			}			
+		}
+		
+		function load()
+		{
+			try {
+				if (GBrowserIsCompatible()) {
+					m_oMap = new GMap2(document.getElementById("map"));
+					if (m_oMap == null) return;
+					
+					m_oMap.setMapType(G_HYBRID_MAP);
+					m_oMap.setUIToDefault();
+					m_oMap.enableContinuousZoom();
+					m_oMap.enableScrollWheelZoom();
+					m_oMap.setCenter(new GLatLng(49.048989, 2.016531), 13.0);
+					GEvent.addListener(m_oMap, "click", onMapClick);
+					
+					directionsPanel = document.getElementById("route");
+
+					m_oGeocoder = new GClientGeocoder();
+					m_oDirections = new GDirections(null, directionsPanel);
+					GEvent.addListener(m_oDirections, "load", onRoute);
+					
+					window.external.OnGMapLoaded();
+				}
+			}
+			catch(err) {
+			}			
+		}
+		
+		function onRoute()
+		{
+			var oPolyLine = m_oDirections.getPolyline();
+			if (oPolyLine == null) return;
+			
+			var nPts = oPolyLine.getVertexCount();
+			if (nPts <= 0) return;
+			
+			var strPts = "";
+			for (iPt = 0; iPt < nPts; iPt++) {
+				strPts += oPolyLine.getVertex(iPt).lng();
+				strPts += ";";
+				strPts += oPolyLine.getVertex(iPt).lat();
+				if (iPt < nPts - 1) strPts += ";";
+			}
+			
+			window.external.OnGMapRoute(m_oDirections.getDistance().meters, m_oDirections.getDuration().seconds, strPts);
+		}
+		
+		function onMapClick(overlay, latlng)
+		{
+			if (latlng) {
+				m_oLastLongi = latlng.lng();
+				m_oLastLati = latlng.lat();
+				window.external.OnGMapAddPoint(m_oLastLongi, m_oLastLati);
+			}
+		}
+
+		function getRoute(dLong1, dLat1, dLong2, dLat2)
+		{
+			var lstLatLng = [];
+			oLatLng = new GLatLng(dLat1, dLong1);
+			lstLatLng.push(oLatLng);
+			oLatLng = new GLatLng(dLat2, dLong2);
+			lstLatLng.push(oLatLng);
+			m_oDirections.loadFromWaypoints(lstLatLng, {travelMode:G_TRAVEL_MODE_WALKING,getPolyline:true,getSteps:true});
+		}
+
+		function centerMapOn(longi, lati)
+		{
+			if (m_oMap == null) return;
+			m_oMap.setCenter(new GLatLng(lati, longi), 13.0);
+		}
+		
+		function centerZoom(longi, lati, zoom)
+		{
+			if (m_oMap == null) return;
+			m_oMap.setCenter(new GLatLng(lati, longi), zoom);
+		}
+
+		function displayItinerary(strPoints)
+		{
+			if (m_oMap == null) return;
+			m_oMap.clearOverlays();
+
+			if (!strPoints) return;
+			
+			var lstPts = strPoints.split(",");
+			var lstLatLng = [];
+			var nPts = lstPts.length / 2;
+			for (var iPt = 0; iPt < nPts; iPt++) {
+				dLati = lstPts[2*iPt+1];
+				dLongi = lstPts[2*iPt];
+				oLatLng = new GLatLng(dLati, dLongi);
+				lstLatLng.push(oLatLng);
+				if (iPt == 0 || iPt == nPts - 1) {
+					oMarker = new GMarker(oLatLng);
+					m_oMap.addOverlay(oMarker);
+				}
+			}
+			m_oPolyline = new GPolyline(lstLatLng);
+			m_oMap.addOverlay(m_oPolyline);
+		}
+		
+		function showAddress(address) {
+			if (m_oMap == null) return;
+			if (m_oGeocoder == null) return;
+			
+			m_oGeocoder.getLatLng(
+				address,
+				function (point) {
+					if (!point) alert(address + " non trouvé");
+					else m_oMap.setCenter(point, 13);
+				}
+			);
+		}
+		//]]>
+	</script>
+</head>
+
+
+<body onload="load()" onunload="unload()">
+	<div class="map" id="map" style="width: 100%; height: 100%;"></div>
+	<div class="route" id="route"></div>
+</body>
+
+</html>
