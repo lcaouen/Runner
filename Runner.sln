@@ -1,12 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csproj", "{226EF524-1B14-4594-8682-3F260F12B955}"
 	ProjectSection(ProjectDependencies) = postProject
 		{60E1CFEF-5397-42DB-84E9-C2D227D99E70} = {60E1CFEF-5397-42DB-84E9-C2D227D99E70}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RS200", "RS200\RS200.vcproj", "{60E1CFEF-5397-42DB-84E9-C2D227D99E70}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RS200", "RS200\RS200.vcxproj", "{60E1CFEF-5397-42DB-84E9-C2D227D99E70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

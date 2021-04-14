@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <title>GoogleMap</title>
+
+        <style type="text/css">
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+            }
+            body {
+                margin-top: 0px;
+                margin-right: 0px;
+                margin-left: 0px;
+                margin-bottom: 0px;
+            }
+        </style>
+
+        <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" />
+        <script src="https://cdn.jsdelivr.net/npm/leaflet.icon.glyph@0.2.1/Leaflet.Icon.Glyph.min.js"></script>
+        <script type="text/javascript">
+            //<![CDATA[
+            var m_oMap = null
+            var mLayerMarkers = null
+            var mLayerPolyline = null
+            var m_oLastLati = 49.048989
+            var m_oLastLongi = 2.016531
+            var m_lZoom = 13
+
+            function load() {
+                m_oMap = L.map('map').setView([m_oLastLati, m_oLastLongi], m_lZoom)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(m_oMap)
+                mLayerMarkers = L.layerGroup().addTo(m_oMap)
+                mLayerSearch = L.layerGroup().addTo(m_oMap)
+                mLayerPolyline = L.layerGroup().addTo(m_oMap)
+
+                let options = {
+                    placeholder: 'Centrer sur une adresse' /* The text of the search input placeholder */
+                }
+				L.Control.geocoder(options).addTo(m_oMap)
+            }
+
+            function centerMapOn(longi, lati) {
+                m_oMap.flyTo([lati, longi])
+            }
+
+            function centerZoom(longi, lati, zoom) {
+				mLayerSearch.clearLayers()
+				L.marker([lati, longi], { icon: L.icon.glyph({ prefix: "fas", glyph: "running", glyphColor: "white", glyphSize: "18px" }) }).addTo(mLayerSearch)
+                m_oMap.flyTo([lati, longi], zoom)
+            }
+
+            function displayItinerary(strPoints) {
+                if (m_oMap == null) return
+                if (!strPoints) return
+                mLayerMarkers.clearLayers()
+
+                var lstPts = strPoints.split(',')
+                var lstLatLng = []
+                var nPts = lstPts.length / 2
+                for (var iPt = 0; iPt < nPts; iPt++) {
+					let color = "LightSkyBlue";
+
+					dLati = lstPts[2 * iPt + 1]
+                    dLongi = lstPts[2 * iPt]
+                    lstLatLng.push([dLati, dLongi])
+                    if (iPt == 0) {
+						color = "LightGreen";
+                        L.marker([dLati, dLongi], { icon: L.icon.glyph({ prefix: "fas", glyph: "home", glyphColor: color, glyphSize: "15px" }) }).addTo(mLayerMarkers)
+                    }
+                    if (iPt == nPts - 1) {
+						color = "LightCoral";
+                        L.marker([dLati, dLongi], { icon: L.icon.glyph({ prefix: "fas", glyph: "home", glyphColor: color, glyphSize: "15px" }) }).addTo(mLayerMarkers)
+                    }
+                }
+
+                var polyline = L.polyline(lstLatLng, { color: 'blue' }).addTo(mLayerPolyline);
+                // zoom the map to the polyline
+                m_oMap.fitBounds(polyline.getBounds())
+            }
+
+            //]]>
+        </script>
+    </head>
+
+    <body onload="load()">
+        <div class="map" id="map" style="width: 100%; height: 100%;"></div>
+    </body>
+</html>
